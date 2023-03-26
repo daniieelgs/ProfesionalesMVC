@@ -1,0 +1,95 @@
+﻿@model ProfesionalesMVC.Models.Profesional
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Profesional</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NIF)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NIF)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Mail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Mail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <hr />
+    <h4>Actividades</h4>
+    @if((ViewBag.Activities as SelectList).Count() > 0) {
+        <div class="container-fluid">
+            <form class="d-flex" role="search" asp-controller="Profesionales" asp-action="AddActivity" method="post">
+                <input name="ProfesionalId" value="@Model.Id" hidden/>
+                 <!--<span asp-validation-for="ProfesionalesActividades[0].PrecioHora" class="text-danger"></span>-->
+                <select class="form-select" aria-label=".form-select-lg example" style="width:max-content" name="ActividadId" asp-items="ViewBag.Activities"></select>
+                <input type="number" name="PrecioHora" style="width: 50px"/>
+                <span>€/h</span>
+                <button class="btn btn-outline-success mx-3" type="submit">Añadir actividad</button>
+            </form>
+        </div>
+    }
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Precio""
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (ProfesionalActividad item in ViewBag.ActivitiesDone) {
+        <tr>
+            <td>
+                <a asp-controller="Actividades" asp-action="Details" asp-route-id="@item.ActividadId">@Html.DisplayFor(modelItem => item.Actividad.Nombre)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioHora)
+                €
+            </td>
+            <td>
+                <a class="btn btn-outline-danger btn-sm" asp-action="RemoveActivity" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+<div>
+    <a class="btn btn-outline-info btn-sm" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a class="btn btn-outline-secondary btn-sm" asp-action="Index">Volver a la lista</a>
+</div>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ProfesionalesMVC.Models.Profesional>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Profesionales</h1>
+<div class="container-fluid">
+        <a class="btn btn-outline-success" asp-action="Create">Añadir profesional</a>
+        <form class="d-flex" role="search" style="width:60%; float: right" asp-action="Index" method="get">
+            <select class="form-select" aria-label=".form-select-lg example" style="width:max-content" name="field" asp-items="ViewBag.Fields"></select>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NIF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Nombre)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NIF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                <a class="btn btn-outline-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
